@@ -11,6 +11,7 @@ const TYPE_LABELS = {
   'overuse': 'Word Overuse',
   'cadence': 'Cadence',
   'genre-voice': 'Genre Voice',
+  'ai-pattern': 'AI Pattern',
 }
 
 export default function Dashboard({ stats, issues, onIssueClick, searchQuery, activeFilter }) {

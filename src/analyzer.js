@@ -4,6 +4,7 @@
  */
 
 // ─── BUILT-IN WORD LISTS ───────────────────────────────────────────────────
+import { scanAIPatterns, scanManuscriptAIPatterns } from './aiPatternScanner'
 
 const ROMANTASY_MICRO_PHRASES = [
   'his jaw tightened','her jaw tightened','jaw tightens','jaw tightened',
@@ -768,7 +769,7 @@ export function analyzeManuscript(chapters, settings = {}) {
     strictAIMode = false,
   } = settings;
 
-  const allIssues = [
+  let allIssues = [
     ...analyzeSentenceStarters(chapters, sensitivity),
     ...analyzeOutOfPlaceProse(chapters),
     ...analyzeMicroPhrases(chapters, customPhrases, sensitivity),
@@ -779,6 +780,42 @@ export function analyzeManuscript(chapters, settings = {}) {
     ...analyzeFlowAndCadence(chapters, sensitivity),
     ...analyzeGenreVoice(chapters, genre),
   ];
+
+  // Run AI Pattern Scanner
+  const aiIssues = [];
+  chapters.forEach(chapter => {
+    const flags = scanAIPatterns(chapter);
+    flags.forEach(f => {
+      aiIssues.push({
+        type: 'ai-pattern',
+        label: f.ruleId,
+        severity: f.confidence === 'High' ? 'high' : f.confidence === 'Moderate' ? 'medium' : 'low',
+        chapter: chapter.title,
+        chapterIndex: chapter.index,
+        passage: f.text,
+        context: f.context || f.text,
+        explanation: `${f.explanation} This structural pattern is commonly associated with AI-generated prose.`,
+        alternatives: ['Review this passage for over-structuring to ensure the prose remains sharp.'],
+      });
+    });
+  });
+
+  const globalFlags = scanManuscriptAIPatterns(chapters);
+  globalFlags.forEach(f => {
+    aiIssues.push({
+        type: 'ai-pattern',
+        label: f.ruleId,
+        severity: f.confidence === 'High' ? 'high' : f.confidence === 'Moderate' ? 'medium' : 'low',
+        chapter: 'Manuscript-Level',
+        chapterIndex: -1,
+        passage: f.text,
+        context: f.context || f.text,
+        explanation: `${f.explanation} This structural pattern is commonly associated with AI-generated prose.`,
+        alternatives: ['Review this concept or pattern across multiple chapters.'],
+    });
+  });
+
+  allIssues = [...allIssues, ...aiIssues];
 
   // Deduplicate very similar passages in the same chapter
   const seen = new Set();
