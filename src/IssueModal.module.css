@@ -1,0 +1,132 @@
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(5px);
+  z-index: 400;
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: #1a1824;
+  border: 1px solid rgba(201,168,76,0.28);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 680px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 0 30px rgba(201,168,76,0.14);
+  animation: slideUp 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.closeBtn {
+  position: absolute; top: 1rem; right: 1rem;
+  background: #252334; border: 1px solid rgba(201,168,76,0.12);
+  color: #B0A898; width: 30px; height: 30px;
+  border-radius: 6px; cursor: pointer; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.closeBtn:hover { border-color: #7a6630; color: #E8E0D0; }
+
+.header { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+
+.pill {
+  padding: 0.18rem 0.6rem; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 600; text-transform: capitalize; letter-spacing: 0.04em;
+}
+.high   { background: rgba(194,79,79,0.2); color: #e07070; }
+.medium { background: rgba(201,135,76,0.2); color: #dba068; }
+.low    { background: rgba(79,126,194,0.2); color: #7aaae0; }
+.note   { background: rgba(107,78,113,0.25); color: #9D6FA8; }
+
+.typeTag {
+  font-size: 0.75rem; color: #B0A898;
+  background: #252334; padding: 0.18rem 0.6rem; border-radius: 100px;
+}
+.chapterTag { font-size: 0.75rem; color: #6e6860; }
+
+.title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-weight: 400;
+  color: #E8E0D0; margin-bottom: 1.25rem; line-height: 1.35;
+}
+
+.contextBlock {
+  background: #131118;
+  border-left: 2px solid rgba(201,168,76,0.2);
+  border-radius: 0 8px 8px 0;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.97rem; line-height: 1.7; color: #B0A898;
+}
+.contextLabel {
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em;
+  color: #6e6860; margin-bottom: 0.4rem;
+}
+
+.flaggedLine {
+  background: rgba(201,168,76,0.07);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; color: #E8C97A; line-height: 1.6;
+  margin-bottom: 0.75rem; position: relative;
+}
+.flaggedLabel {
+  position: absolute; top: -9px; left: 12px;
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em;
+  background: #1a1824; color: #7a6630; padding: 0 0.4rem;
+}
+
+.countChip {
+  display: inline-block;
+  font-size: 0.78rem; color: #9D6FA8;
+  background: rgba(107,78,113,0.2);
+  border: 1px solid rgba(107,78,113,0.3);
+  border-radius: 100px; padding: 0.2rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.countChip strong { color: #C9A84C; }
+
+.explanation {
+  font-size: 0.88rem; color: #B0A898; line-height: 1.65;
+  background: #131118; border: 1px solid rgba(201,168,76,0.08);
+  border-radius: 8px; padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.alts { margin-bottom: 1rem; }
+.altsLabel {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.09em;
+  color: #6e6860; margin-bottom: 0.5rem;
+}
+.altItem {
+  background: rgba(107,78,113,0.15);
+  border: 1px solid rgba(107,78,113,0.25);
+  border-radius: 8px;
+  padding: 0.55rem 0.9rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.92rem; color: #9D6FA8; margin-bottom: 0.4rem; line-height: 1.5;
+}
+
+.footer {
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding-top: 0.9rem; margin-top: 0.5rem;
+}
+.position { font-size: 0.78rem; color: #6e6860; }
+
+.navBtn {
+  background: #252334; border: 1px solid rgba(201,168,76,0.12);
+  color: #B0A898; padding: 0.38rem 0.85rem;
+  border-radius: 8px; cursor: pointer; font-size: 0.82rem;
+  transition: all 0.2s;
+}
+.navBtn:hover:not(:disabled) { border-color: #7a6630; color: #E8C97A; }
+.navBtn:disabled { opacity: 0.35; cursor: default; }
