@@ -130,9 +130,9 @@ export function parseManuscript(rawText) {
   let currentScene = null;
   let chapterIndex = 0;
 
-  const chapterPattern = /^(chapter\s+\d+|#\s*chapter\s*\d+|\*{0,3}chapter\s+\w+)/i;
-  const sceneBreakPattern = /^(\*\s*\*\s*\*|---+|#{3,}|~+)$/;
-  const povPattern = /^\*{1,2}([A-Z][a-z]+)\*{1,2}$|^POV:\s*([A-Z][a-z]+)/;
+  const chapterPattern = /^(#{1,3}\s*)?(chapter\s+\d+|prologue|epilogue|\bpart\s+\d+)/i;
+  const sceneBreakPattern = /^(\*\s*\*\s*\*|---+|#{3,}|~{3,}|\*{3,})$/;
+  const povPattern = /^\*{0,2}(Elowyn|Killian|Lysander|Ronin)\*{0,2}$|^POV:\s*([A-Z][a-z]+)|^\[([A-Z][a-z]+)\]/i;
 
   lines.forEach((line) => {
     const trimmed = line.trim();
@@ -173,7 +173,9 @@ export function parseManuscript(rawText) {
 
     const povMatch = trimmed.match(povPattern);
     if (povMatch) {
-      currentChapter.pov = povMatch[1] || povMatch[2];
+      const name = povMatch[1] || povMatch[2] || povMatch[3];
+      const properlyCased = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+      currentChapter.pov = properlyCased;
       return;
     }
 
